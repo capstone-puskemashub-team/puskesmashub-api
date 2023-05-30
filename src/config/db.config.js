@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
   }
 )
 
-modules.exports = {
+module.exports = {
   Sequelize,
   sequelize
 }
