@@ -35,7 +35,7 @@ exports.signup = async (req, res, next) => {
     if (!roles) {
       const role = await Roles.findOne({
         where: {
-          name: 'staff'
+          name: 'pasien'
         }
       })
 
