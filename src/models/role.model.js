@@ -1,4 +1,4 @@
-const RolesModel = (sequelize, Sequelize) => {
+const RoleModel = (sequelize, Sequelize) => {
   const Role = sequelize.define('roles', {
     roleId: {
       type: Sequelize.STRING,
@@ -12,4 +12,4 @@ const RolesModel = (sequelize, Sequelize) => {
   return Role
 }
 
-module.exports = RolesModel
+module.exports = RoleModel

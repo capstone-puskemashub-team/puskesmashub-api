@@ -5,19 +5,24 @@ const db = {}
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
-db.users = require('./users.model')(sequelize, Sequelize)
-db.roles = require('./roles.model')(sequelize, Sequelize)
+db.user = require('./user.model')(sequelize, Sequelize)
+db.role = require('./role.model')(sequelize, Sequelize)
 
-db.roles.belongsToMany(db.users, {
-  through: 'user_roles',
-  foreignKey: 'roleId',
-  otherKey: 'userId'
-})
+db.user.belongsToMany(db.role, {
+  through: {
+    model: "user_roles",
+    attributes: [],
+  },
+  foreignKey: "userId",
+});
 
-db.users.belongsToMany(db.roles, {
-  through: 'user_roles',
-  foreignKey: 'userId',
-  otherKey: 'roleId'
+db.role.belongsToMany(db.user, {
+  through: {
+    model: "user_roles",
+    attributes: [],
+  },
+  foreignKey: "roleId"
+
 })
 
 db.ROLES = ['staff', 'doctor', 'admin']

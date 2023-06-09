@@ -1,81 +1,50 @@
-const db = require('../models')
-const Users = db.users
-const Roles = db.roles
+const { v4: uuid } = require("uuid");
+const { hashPassword, comparePassword } = require("../utils/password");
+const { createTokenUser, attachCookieToRespone } = require("../utils/token");
+const db = require("../models");
+
+const User = db.user
+const Role = db.role
 const Op = db.Sequelize.Op
-const { v4: uuid } = require('uuid')
 
-exports.signup = async (req, res, next) => {
+const signup = async (req, res, next) => {
 
-  const { username, password, firstname, lastname, telephone, roles } = req.body
+  const { username, firstname, lastname, telephone, roles } = req.body
 
   try {
     const userId = uuid()
-    // TODO: encrypt password
+    const hashedPassword = hashPassword(req.body.password)
 
-    const user = await Users.create({
+    const user = await User.create({
       userId: userId,
       username: username,
-      password: password,
+      password: hashedPassword,
       firstname: firstname,
       lastname: lastname,
-      telephone: telephone
-    })
+      telephone: telephone,
+    });
 
-    if (!user) {
-      const respone = {
-        status: 'error',
-        message: 'User was not registered successfully!'
-      }
-
-      console.log(respone)
-      res.status(500)
-        .json(respone)
-    }
-
-    if (!roles) {
-      const role = await Roles.findOne({
-        where: {
-          name: 'staff'
-        }
-      })
-
-      const result = await user.setRoles(role)
-      if (result) {
-        const respone = {
-          status: 'success',
-          message: 'User was registered successfully!',
-          data: {
-            userId: user.userId,
-            username: user.username,
-          }
-        }
-
-        console.log(respone)
-        res.status(201)
-          .json(respone)
-
-        return
-      } 
-    }
-
-    const allRoles = await Roles.findAll({
+    const role = await Role.findAll({
       where: {
         name: {
-          [Op.or]: Array.isArray(roles) ? roles : [roles]
-        }
-      }
-    })
+          [Op.or]: !roles ? ["staff"] : Array.isArray(roles) ? roles : [roles],
+        },
+      },
+    });
 
-    const result = user.setRoles(allRoles)
+    const result = await user.setRoles(role);
+    const tokenUser = createTokenUser(user, role);
+    const token = attachCookieToRespone({ res, user: tokenUser })
+
     if (result) {
       const respone = {
-        status: 'success',
-        message: 'User was registered successfully!',
+        status: "success",
+        message: "User was registered successfully!",
         data: {
-          userId: user.userId,
-          username: user.username,
-        }
-      }
+          user: tokenUser,
+          token: token
+        },
+      };
 
       console.log(respone)
       res.status(201)
@@ -86,57 +55,65 @@ exports.signup = async (req, res, next) => {
   } catch (err) {
     const respone = {
       status: 'error',
-      message: err.message || 'Some error occurred while creating the User.'
+      message: 'User was not registered successfully! ' + err.message
     }
-
     console.log(respone)
 
-    res.status(500)
-      .json(respone)
-
+    res.status(500).json(respone)
     return
   }
 }
 
-exports.signin = async (req, res, next) => {
-  const { username, password } = req.body
+const signin = async (req, res, next) => {
+  const { username } = req.body
 
-  console.log({ username, password })
-
-  await Users.findOne({
+  await User.findOne({
+    include: {
+      model: Role,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
     where: {
       username: username
     }
-  }).then(Users => {
-    if(!Users) {
+  }).then(user => {
+    if (!user) {
       const respone = {
-        status: 'not found',
-        message: `User with username ${username} was not found.`
-      }
+        status: "not found",
+        message: `User with username ${username} was not found.`,
+      };
+      console.log(respone);
 
-      console.log(respone)
-      
-      res.status(404)
-        .json(respone)
-
-      return
+      res.status(404).json(respone);
+      return;
     }
 
-    const token = 'token' // TODO: generate token
+    const passwordIsCorrect = comparePassword(req.body.password, user.password)
+
+    if (!passwordIsCorrect) {
+      const respone = {
+        status: "error",
+        message: "Login failed! Invalid Password!",
+      };
+      console.log(respone);
+
+      res.status(401).json(respone);
+      return;
+    }
+
+    const tokenUser = createTokenUser(user, user.roles)
+    const token = attachCookieToRespone({ res, user: tokenUser })
 
     const respone = {
-      status: 'success',
+      status: "success",
+      message: "Login successful!",
       data: {
-        token: token,
-        user: {
-          userId: Users.userId,
-          username: Users.username,
-          firstname: Users.firstname,
-          lastname: Users.lastname,
-          telephone: Users.telephone
-        }
-      }
-    }
+        user: tokenUser,
+        token: token
+      },
+    };
 
     console.log(respone)
 
@@ -147,7 +124,7 @@ exports.signin = async (req, res, next) => {
   }).catch(err => {
     const respone = {
       status: 'error',
-      message: err.message || `Error retrieving user with username ${username}`
+      message: 'Login failed! error: ' + err.message
     }
 
     console.log(respone)
@@ -155,4 +132,26 @@ exports.signin = async (req, res, next) => {
     res.status(500)
       .json(respone)
   })
+}
+
+const signout = async (req, res, next) => {
+  res.cookie('puskesmashub-token', null, {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  const respone = {
+    status: 'success',
+    message: 'User was signed out successfully!'
+  }
+  console.log(respone)
+
+  res.status(200)
+    .json(respone)
+}
+
+module.exports = {
+  signup,
+  signin,
+  signout
 }

@@ -6,4 +6,4 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
 
-server.timeout = 1000
+server.timeout = 1000 * 60 * 2

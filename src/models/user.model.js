@@ -1,5 +1,5 @@
-const UsersModel = (sequelize, Sequelize) => {
-  const Users = sequelize.define('users', {
+const UserModel = (sequelize, Sequelize) => {
+  const User = sequelize.define('users', {
     userId: {
       type: Sequelize.STRING,
       primaryKey: true,
@@ -22,17 +22,9 @@ const UsersModel = (sequelize, Sequelize) => {
     telephone: {
       type: Sequelize.STRING
     },
-    createdAt: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    },
-    updatedAt: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    }
   });
 
-  return Users;
+  return User;
 }
 
-module.exports = UsersModel;
+module.exports = UserModel;

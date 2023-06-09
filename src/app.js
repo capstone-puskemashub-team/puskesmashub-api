@@ -1,6 +1,10 @@
+
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
+
+require('dotenv').config();
 
 const app = express()
 
@@ -9,7 +13,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 app.use(cors())
+app.use(cookieParser(process.env.JWT_SECRET))
 
+// TODO: add cookie and session middleware
 
 // Database
 const db = require('./models')

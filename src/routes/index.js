@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const authRouter = require('./auth.route')
 
 router.get('/', (req, res) => {
   res.status(200)
@@ -9,8 +8,10 @@ router.get('/', (req, res) => {
     })
 })
 
-// const user = require('./user.route')
+const authRouter = require("./auth.routes")
+const userRouter = require('./user.routes')
 
 router.use('/auth', authRouter)
+router.use('/users', userRouter)
 
 module.exports = router;
