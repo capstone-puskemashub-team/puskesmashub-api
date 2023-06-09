@@ -22,9 +22,9 @@ const UserModel = (sequelize, Sequelize) => {
     telephone: {
       type: Sequelize.STRING
     },
-  });
+  })
 
-  return User;
+  return User
 }
 
-module.exports = UserModel;
+module.exports = UserModel

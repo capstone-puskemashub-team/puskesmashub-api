@@ -26,12 +26,12 @@ const attachCookieToRespone = ({ res, user }) => {
   const token = generateToken({ payload: user })
   const oneDay = 1000 * 60 * 60 * 24
 
-  res.cookie('puskesmashub-token', token, {
+  res.cookie("puskesmashubToken", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
     signed: true,
-  })
+  });
 
   return token
 }

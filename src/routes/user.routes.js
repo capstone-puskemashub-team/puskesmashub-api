@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const userController = require("../controllers/user.controller");
+const { authenticateUser } = require('../middlewares/authentication');
 
 router.use((req, res, next) => {
   res.header(
@@ -11,13 +12,20 @@ router.use((req, res, next) => {
   next();
 });
 
-router.route("/").get(userController.getAllUsers);
-router.route("/staff").get(userController.getAllStaff);
-router.route("/doctor").get(userController.getAllDoctor);
-// router.route('/showme').get(userController.showMe)
-// router.route("/:id").get(userController.getSingleUser);
-// router.route("/:id").put(userController.updateUser);
-// router.route("/:id/password").put(userController.updateUserPassword);
-// router.route("/:id").delete(userController.deleteUser);
+router.route("/").get(authenticateUser, userController.getAllUsers);
 
-module.exports = router;
+// router.route("/staff").get(authenticateUser, userController.getAllStaff);
+
+// router.route("/doctor").get(authenticateUser, userController.getAllDoctor);
+
+router.route("/current_user").get(authenticateUser, userController.getCurrentUser);
+
+router.route("/:id").get(authenticateUser, userController.getSingleUser);
+
+router.route("/update_user").put(authenticateUser, userController.updateUser);
+
+router.route("/update_password").put(authenticateUser, userController.updateUserPassword);
+
+router.route("/delete").delete(authenticateUser, userController.deleteUser);
+
+module.exports = router
