@@ -78,7 +78,6 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userId` varchar(255) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `telephone` varchar(255) DEFAULT NULL,
