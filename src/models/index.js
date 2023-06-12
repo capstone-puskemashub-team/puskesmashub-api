@@ -7,6 +7,8 @@ db.Sequelize = Sequelize
 
 db.user = require('./user.model')(sequelize, Sequelize)
 db.role = require('./role.model')(sequelize, Sequelize)
+db.doctor = require('./doctor.model')(sequelize, Sequelize)
+db.medicine = require('./medicine.model')(sequelize, Sequelize)
 
 db.user.belongsToMany(db.role, {
   through: {
@@ -25,6 +27,6 @@ db.role.belongsToMany(db.user, {
 
 })
 
-db.ROLES = ['staff', 'doctor', 'admin']
+db.ROLES = ['admin'] // Role baru admin
 
 module.exports = db

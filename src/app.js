@@ -35,7 +35,7 @@ db.sequelize.authenticate()
   })
 
 // Routes
-const Router = require('./routes')
+const Router = require('./routes/routes')
 
 app.get('/', (req, res) => {
   res.status(200)
