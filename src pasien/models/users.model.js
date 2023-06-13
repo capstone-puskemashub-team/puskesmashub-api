@@ -6,7 +6,7 @@ const UsersModel = (sequelize, Sequelize) => {
       unique: true,
       allowNull: false
     },
-    username: {
+    uuid: {
       type: Sequelize.STRING,
       unique: true,
     },
