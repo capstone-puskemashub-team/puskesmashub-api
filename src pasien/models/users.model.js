@@ -10,9 +10,6 @@ const UsersModel = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       unique: true,
     },
-    password: {
-      type: Sequelize.STRING
-    },
     firstname: {
       type: Sequelize.STRING
     },
