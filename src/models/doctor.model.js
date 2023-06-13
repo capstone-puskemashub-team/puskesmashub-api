@@ -1,5 +1,3 @@
-const { DataTypes } = require("sequelize");
-
 const DoctorModel = (sequelize, Sequelize) => {
   const Doctor = sequelize.define("doctors", {
     doctorId: {
@@ -17,7 +15,7 @@ const DoctorModel = (sequelize, Sequelize) => {
       unique: true,
     },
     jenisKelamin: {
-      type: Sequelize.ENUM("Laki-laki", "Perempuan"),
+      type: Sequelize.ENUM("L", "P"),
     },
     umur: {
       type: Sequelize.INTEGER,
@@ -35,14 +33,7 @@ const DoctorModel = (sequelize, Sequelize) => {
       type: Sequelize.TEXT,
     },
     jadwalKerja: {
-      type: DataTypes.TEXT,
-      get() {
-        const value = this.getDataValue("jadwalKerja");
-        return value ? value.split(",") : [];
-      },
-      set(value) {
-        this.setDataValue("jadwalKerja", value.join(","));
-      },
+      type: Sequelize.JSON,
     },
   });
 
