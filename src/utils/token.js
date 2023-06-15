@@ -36,9 +36,19 @@ const attachCookieToRespone = ({ res, user }) => {
   return token
 }
 
+const dettachCookieFromRespone = (req, res) => {
+  res.cookie("puskesmashubToken", null, {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+    secure: process.env.NODE_ENV === "production",
+    signed: true,
+  });
+}
+
 module.exports = {
   createTokenUser,
   generateToken,
   isTokenValid,
-  attachCookieToRespone
+  attachCookieToRespone,
+  dettachCookieFromRespone
 }

@@ -1,6 +1,6 @@
 const db = require('../models')
 const { hashPassword, comparePassword } = require("../utils/password");
-const { createTokenUser, attachCookieToRespone } = require('../utils/token')
+const { createTokenUser, attachCookieToRespone, dettachCookieFromRespone } = require('../utils/token')
 
 const User = db.user
 const Role = db.role
@@ -234,6 +234,7 @@ const deleteUser = async (req, res, next) => {
     message: 'Delete user success'
   }
 
+  dettachCookieFromRespone(req, res)
   res.status(200).json(response)
 }
 

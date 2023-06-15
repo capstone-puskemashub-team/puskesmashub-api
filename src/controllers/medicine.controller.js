@@ -84,7 +84,7 @@ const getMedicineById = async (req, res, next) => {
 }
 
 const updateMedicineById = async (req, res, next) => {
-  const { id: medicineId } = req.params
+  const { id: medicineId } = req.params;
 
   const { nama, stok, harga, deskripsi } = req.body
 
@@ -99,7 +99,7 @@ const updateMedicineById = async (req, res, next) => {
     },
   })
 
-  if (!medicine) {
+  if (!medicine || medicine == 0) {
     const error = new Error("Update medicine by id failed or medicine not found")
     error.status = 400
     return next(error)
@@ -115,7 +115,7 @@ const updateMedicineById = async (req, res, next) => {
     status: "success",
     message: "Update medicine by id success",
     data: {
-      delete: "ok",
+      medicine: medicineUpdated,
     },
   };
 
@@ -142,7 +142,7 @@ const deleteMedicineById = async (req, res, next) => {
     status: "success",
     message: "Delete medicine by id success",
     data: {
-      medicine: medicine,
+      delete: medicine,
     },
   }
 

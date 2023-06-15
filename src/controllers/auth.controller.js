@@ -1,6 +1,6 @@
 const { v4: uuid } = require("uuid");
 const { hashPassword, comparePassword } = require("../utils/password");
-const { createTokenUser, attachCookieToRespone } = require("../utils/token");
+const { createTokenUser, attachCookieToRespone, dettachCookieFromRespone } = require("../utils/token");
 const db = require("../models");
 
 const User = db.user
@@ -135,10 +135,7 @@ const signin = async (req, res, next) => {
 }
 
 const signout = async (req, res, next) => {
-  res.cookie('puskesmashub-token', null, {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-  });
+  dettachCookieFromRespone(req, res)
 
   const respone = {
     status: 'success',

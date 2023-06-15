@@ -22,9 +22,9 @@ const createDoctor = async (req, res, next) => {
   });
 
   if (!doctor) {
-    const error = new Error("Create doctor failed");
-    error.status = 400;
-    return next(error);
+    const error = new Error("Create doctor failed")
+    error.status = 400
+    return next(error)
   }
 
   const response = {
