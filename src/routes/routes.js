@@ -10,10 +10,16 @@ router.get('/', (req, res) => {
 
 const authRouter = require('./auth.routes')
 const userRouter = require('./user.routes')
-const doctorRouter = require("./doctor.routes");
+const doctorRouter = require('./doctor.routes');
+const medicineRouter = require('./medicine.routes')
+const diseaseRouter = require('./disease.routes')
+const patientRouter = require('./patient.routes')
 
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
 router.use('/doctors', doctorRouter)
+router.use('/medicines', medicineRouter)
+router.use('/diseases', diseaseRouter)
+router.use('/patients', patientRouter)
 
 module.exports = router;

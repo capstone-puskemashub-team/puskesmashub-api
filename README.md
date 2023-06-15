@@ -27,26 +27,28 @@ $ npm run start
 
 | Parameter | Type     | Description |
 | :-------- | :------- | :---------- |
-| `username`    | `string` | **Required**. |
-| `password`| `string` | **Required**. |
-| `firstname`| `string` | **Required**. |
-| `lastname`| `string` | **Required**. |
-| `telephone`| `string` | **Required**. |
+| `username` | `string` | **Required**. |
+| `password` | `string` | **Required**. |
+| `firstname` | `string` | **Required**. |
+| `lastname` | `string` | **Required**. |
+| `telephone` | `string` | **Required**. |
+| `roles` | `array` | **Optional**, use default value if empty |
 
-<!-- example -->
 **Request**
 
 ```http
-POST /api/auth/singup
+POST /api/v0/auth/signup
 ```
 
+**Body**
 ```json
 {
   "username": "user",
   "password": "password",
   "firstname": "user",
   "lastname": "user",
-  "telephone": "08123456789"
+  "telephone": "08123456789",
+  "roles": ["staff", "admin"]
 }
 ```
 
@@ -60,7 +62,8 @@ POST /api/auth/singup
             "userId": "6039f0ca-5c5a-4e42-b978-6dde6fa446e8",
             "username": "admin",
             "roles": [
-                "staff"
+                "staff",
+                "admin"
             ]
         },
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDM5ZjBjYS01YzVhLTRlNDItYjk3OC02ZGRlNmZhNDQ2ZTgiLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZXMiOlsic3RhZmYiXSwiaWF0IjoxNjg2NTU4MjkyLCJleHAiOjE2ODY2NDQ2OTJ9.-lWgtEWh329Y51565w-ZFW5JN1jP9RkIaygiLYFchuw"
@@ -72,16 +75,16 @@ POST /api/auth/singup
 
 | Parameter | Type     | Description |
 | :-------- | :------- | :---------- |
-| `username`    | `string` | **Required**. |
-| `password`| `string` | **Required**. |
+| `username` | `string` | **Required**. |
+| `password` | `string` | **Required**. |
 
-<!-- example -->
 **Request**
 
 ```http
-POST /api/auth/singin
+POST /api/v0/auth/signin
 ```
 
+**Body**
 ```json
 {
   "username": "user",
@@ -115,7 +118,7 @@ POST /api/auth/singin
 **Request**
 
 ```http
-POST /api/auth/signout
+POST /api/v0/auth/signout
 ```
 
 **Response**
@@ -136,12 +139,79 @@ POST /api/auth/signout
 
 #### Get all users
 
-<!-- Example -->
+**Request**
+
+```http
+GET /api/v0/users
+```
+
+**Response**
+
+```json
+{
+    "status": "success",
+    "message": "Users retrieved successfully!",
+    "data": [
+        {
+            "userId": "6039f0ca-5c5a-4e42-b978-6dde6fa446e8",
+            "username": "admin",
+            "firstname": "admin",
+            "lastname": "admin",
+            "telephone": "08123456789",
+            "roles": [
+                "staff",
+                "admin"
+            ]
+        },
+        {
+            "userId": "6039f0ca-5c5a-4e42-b978-6dde6fa446e8",
+            "username": "admin",
+            "firstname": "admin",
+            "lastname": "admin",
+            "telephone": "08123456789",
+            "roles": [
+                "staff",
+                "admin"
+            ]
+        }
+    ]
+}
+```
+
+#### Get user by id
 
 **Request**
 
 ```http
-GET /api/users
+GET /api/v0/users/:id
 ```
+
+**Example**
+
+```http
+GET /api/v0/users/6039f0ca-5c5a-4e42-b978-6dde6fa446e8
+```
+
+**Response**
+
+```json
+{
+    "status": "success",
+    "message": "User retrieved successfully!",
+    "data": {
+        "userId": "6039f0ca-5c5a-4e42-b978-6dde6fa446e8",
+        "username": "admin",
+        "firstname": "admin",
+        "lastname": "admin",
+        "telephone": "08123456789",
+        "roles": [
+            "staff",
+            "admin"
+        ]
+    }
+}
+```
+
+#### Update user
 
 </details>

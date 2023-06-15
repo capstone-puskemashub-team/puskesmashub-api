@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.use('/api', Router)
+app.use('/api/v0', Router)
 
 // Error Handling
 app.use((req, res, next) => {

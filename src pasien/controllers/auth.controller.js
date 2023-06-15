@@ -6,7 +6,7 @@ const { v4: uuid } = require('uuid')
 
 exports.signup = async (req, res, next) => {
 
-  const { username, password, firstname, lastname, telephone, roles } = req.body
+  const { username,firstname, lastname, telephone, roles } = req.body
 
   try {
     const userId = uuid()
@@ -15,7 +15,6 @@ exports.signup = async (req, res, next) => {
     const user = await Users.create({
       userId: userId,
       username: username,
-      password: password,
       firstname: firstname,
       lastname: lastname,
       telephone: telephone
