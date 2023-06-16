@@ -5,6 +5,36 @@ const Patient = db.patient
 
 const createPatient = async (req, res, next) => {
   const {
+    nama,
+    NIK,
+    jenisKelamin,
+    umur,
+    tempatLahir,
+    tanggalLahir,
+    telephone,
+    JaminanKesehatan,
+    noBPJS,
+    alergi,
+    alamat,
+    namaPenanggungJawab,
+    telephonePenanggungJawab,
+    hubunganPenanggungJawab,
+    keluhan,
+    suhuTubuh,
+    beratBadan,
+    beratLahir,
+    tinggiBadan,
+    panjangLahir,
+    tekananDarah,
+    nadi,
+  } = req.body
+
+  const patientId = uuidv4()
+  const NRM = NIK
+  const tanggalPemeriksaan = new Date()
+
+  const patient = await Patient.create({
+    patientId,
     NRM,
     nama,
     NIK,
@@ -20,27 +50,15 @@ const createPatient = async (req, res, next) => {
     namaPenanggungJawab,
     telephonePenanggungJawab,
     hubunganPenanggungJawab,
-  } = req.body
-
-  const patientId = uuidv4()
-
-  const patient = await Patient.create({
-    patientId: patientId,
-    NRM: NRM,
-    nama: nama,
-    NIK: NIK,
-    jenisKelamin: jenisKelamin,
-    umur: umur,
-    tempatLahir: tempatLahir,
-    tanggalLahir: new Date(tanggalLahir),
-    telephone: telephone,
-    JaminanKesehatan: JaminanKesehatan,
-    noBPJS: noBPJS,
-    alergi: alergi,
-    alamat: alamat,
-    namaPenanggungJawab: namaPenanggungJawab,
-    telephonePenanggungJawab: telephonePenanggungJawab,
-    hubunganPenanggungJawab: hubunganPenanggungJawab,
+    tanggalPemeriksaan,
+    keluhan,
+    suhuTubuh,
+    beratBadan,
+    beratLahir,
+    tinggiBadan,
+    panjangLahir,
+    tekananDarah,
+    nadi,
   })
 
   if (!patient) {
@@ -74,6 +92,7 @@ const getAllPatients = async (req, res, next) => {
     status: "success",
     message: "Get all patient success",
     data: {
+      total_patient: patients.length,
       patients: patients,
     },
   }
@@ -113,6 +132,34 @@ const updatePatientById = async (req, res, next) => {
   const { id: patientId } = req.params
 
   const {
+    nama,
+    NIK,
+    jenisKelamin,
+    umur,
+    tempatLahir,
+    tanggalLahir,
+    telephone,
+    JaminanKesehatan,
+    noBPJS,
+    alergi,
+    alamat,
+    namaPenanggungJawab,
+    telephonePenanggungJawab,
+    hubunganPenanggungJawab,
+    keluhan,
+    suhuTubuh,
+    beratBadan,
+    beratLahir,
+    tinggiBadan,
+    panjangLahir,
+    tekananDarah,
+    nadi,
+  } = req.body;
+
+  const tanggalPemeriksaan = new Date()
+
+  const patient = await Patient.update({
+    patientId,
     NRM,
     nama,
     NIK,
@@ -128,24 +175,15 @@ const updatePatientById = async (req, res, next) => {
     namaPenanggungJawab,
     telephonePenanggungJawab,
     hubunganPenanggungJawab,
-  } = req.body
-
-  const patient = await Patient.update({
-    NRM: NRM,
-    nama: nama,
-    NIK: NIK,
-    jenisKelamin: jenisKelamin,
-    umur: umur,
-    tempatLahir: tempatLahir,
-    tanggalLahir: new Date(tanggalLahir),
-    telephone: telephone,
-    JaminanKesehatan: JaminanKesehatan,
-    noBPJS: noBPJS,
-    alergi: alergi,
-    alamat: alamat,
-    namaPenanggungJawab: namaPenanggungJawab,
-    telephonePenanggungJawab: telephonePenanggungJawab,
-    hubunganPenanggungJawab: hubunganPenanggungJawab,
+    tanggalPemeriksaan,
+    keluhan,
+    suhuTubuh,
+    beratBadan,
+    beratLahir,
+    tinggiBadan,
+    panjangLahir,
+    tekananDarah,
+    nadi,
   }, {
     where: {
       patientId: patientId,

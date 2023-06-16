@@ -14,6 +14,7 @@ const doctorRouter = require('./doctor.routes');
 const medicineRouter = require('./medicine.routes')
 const diseaseRouter = require('./disease.routes')
 const patientRouter = require('./patient.routes')
+// route pemeriksaan masih belum. cooming soon ya :D
 
 router.use('/auth', authRouter)
 router.use('/users', userRouter)
