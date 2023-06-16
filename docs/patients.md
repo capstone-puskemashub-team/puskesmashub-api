@@ -85,3 +85,58 @@ POST /api/v0/patients
 ```
 
 ### Get all patients
+
+**Request**
+
+```http
+GET /api/v0/patients
+```
+
+**Response**
+
+```JSON
+{
+    "status": "success",
+    "message": "Get all patient success",
+    "data": {
+        "total_patient": 1,
+        "patients": [
+            {
+                "patientId": "2da1b3cc-51e8-4e9b-b981-4853c8a153a3",
+                "NRM": "1111110101010012",
+                "nama": "Ahmad Ali Masykur",
+                "NIK": "1111110101010012",
+                "jenisKelamin": "L",
+                "umur": 21,
+                "tempatLahir": "Banyumas",
+                "tanggalLahir": "2002-01-27T00:00:00.000Z",
+                "telephone": "0888888888",
+                "JaminanKesehatan": "BPJS",
+                "noBPJS": "111100011001",
+                "alergi": [
+                    "kacang",
+                    "kacang mete"
+                ],
+                "alamat": "Yogyakarta, slebelah ugm",
+                "namaPenanggungJawab": null,
+                "telephonePenanggungJawab": "0899999999",
+                "hubunganPenanggungJawab": "adadeh",
+                "tanggalPemeriksaan": "2023-06-16T10:43:15.000Z",
+                "keluhan": [
+                    "panas",
+                    "pusing"
+                ],
+                "suhuTubuh": 35,
+                "beratBadan": 99,
+                "beratLahir": 3,
+                "tinggiBadan": null,
+                "panjangLahir": 50,
+                "tekananDarah": "110/90",
+                "nadi": 83,
+                "createdAt": "2023-06-16T10:43:15.000Z",
+                "updatedAt": "2023-06-16T10:43:15.000Z"
+            }
+        ]
+    }
+}
+```
