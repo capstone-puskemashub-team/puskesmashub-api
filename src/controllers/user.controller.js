@@ -238,6 +238,158 @@ const deleteUser = async (req, res, next) => {
   res.status(200).json(response)
 }
 
+// For testing not using auth
+const getUserById = async (req, res, next) => {
+  const { id: userId } = req.params
+
+  const user = await User.findOne({
+    attributes: ["username", "firstname", "lastname"],
+    where: {
+      userId: userId,
+    },
+    include: {
+      model: Role,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  if(!user) {
+    const error = new Error('User not found')
+    error.status = 404
+    return next(error)
+  }
+
+  const response = {
+    status: 'success',
+    message: 'Get single user success',
+    data: {
+      user: user
+    }
+  }
+
+  console.log(response)
+  res.status(200).json(response)
+}
+
+const updateUserById = async (req, res, next) => {
+  const { id: userId } = req.params
+  const { username, firstname, lastname } = req.body;
+
+  if (!username || !firstname || !lastname) {
+    const error = new Error("Username or firstname or lastname is empty");
+    error.status = 400;
+    return next(error);
+  }
+
+  const user = await User.findOne({
+    include: {
+      model: Role,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+    where: {
+      userId: userId,
+    },
+  });
+
+  user.username = username;
+  user.firstname = firstname;
+  user.lastname = lastname;
+
+  await user.save();
+
+  const tokenUser = createTokenUser(user, user.roles);
+  const token = attachCookieToRespone({ res, user: tokenUser });
+
+  const response = {
+    status: "success",
+    message: "Update user success",
+    data: {
+      user: tokenUser,
+      token: token,
+    },
+  };
+
+  res.status(200).json(response);
+}
+
+const updateUserPasswordById = async (req, res, next) => {
+  const { id: userId } = req.params
+
+  const { oldPassword, newPassword } = req.body
+
+  if (!oldPassword || !newPassword) {
+    const error = new Error('Old password or new password is empty')
+    error.status = 400
+    return next(error)
+  }
+
+  const user = await User.findOne({
+    include: {
+      model: Role,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+    where: {
+      userId: userId,
+    },
+  });
+
+  const passwordIsCorrect = comparePassword(oldPassword, user.password);
+
+  if (!passwordIsCorrect) {
+    const error = new Error("Old password is invalid");
+    error.status = 400;
+    return next(error);
+  }
+
+  user.password = hashPassword(newPassword)
+
+  await user.save()
+
+  const response = {
+    status: "success",
+    message: "Update user password success",
+  };
+
+  console.log(response)
+  res.status(200).json(response)
+}
+
+const deleteUserById = async (req, res, next) => {
+  const { id: userId } = req.params
+
+  const user = await User.findOne({
+    where: {
+      userId: userId,
+    },
+  });
+
+  if(!user) {
+    const error = new Error('User not found')
+    error.status = 404
+    return next(error)
+  }
+
+  await user.destroy()
+
+  const response = {
+    status: 'success',
+    message: 'Delete user success'
+  }
+
+  dettachCookieFromRespone(req, res)
+  res.status(200).json(response)
+}
+
+
 module.exports = {
   getAllUsers,
   getAllStaff,
@@ -246,5 +398,9 @@ module.exports = {
   getSingleUser,
   updateUser,
   updateUserPassword,
-  deleteUser
+  deleteUser,
+  getUserById,
+  updateUserById,
+  updateUserPasswordById,
+  deleteUserById
 }

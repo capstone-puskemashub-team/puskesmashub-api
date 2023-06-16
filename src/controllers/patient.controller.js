@@ -4,44 +4,13 @@ const { v4: uuidv4 } = require("uuid")
 const Patient = db.patient
 
 const createPatient = async (req, res, next) => {
-  const {
-    NRM,
-    nama,
-    NIK,
-    jenisKelamin,
-    umur,
-    tempatLahir,
-    tanggalLahir,
-    telephone,
-    JaminanKesehatan,
-    noBPJS,
-    alergi,
-    alamat,
-    namaPenanggungJawab,
-    telephonePenanggungJawab,
-    hubunganPenanggungJawab,
-  } = req.body
-
   const patientId = uuidv4()
+  const NRM = req.body.NIK
 
   const patient = await Patient.create({
     patientId: patientId,
     NRM: NRM,
-    nama: nama,
-    NIK: NIK,
-    jenisKelamin: jenisKelamin,
-    umur: umur,
-    tempatLahir: tempatLahir,
-    tanggalLahir: new Date(tanggalLahir),
-    telephone: telephone,
-    JaminanKesehatan: JaminanKesehatan,
-    noBPJS: noBPJS,
-    alergi: alergi,
-    alamat: alamat,
-    namaPenanggungJawab: namaPenanggungJawab,
-    telephonePenanggungJawab: telephonePenanggungJawab,
-    hubunganPenanggungJawab: hubunganPenanggungJawab,
-  })
+  }, req.body)
 
   if (!patient) {
     const error = new Error("Create patient failed")
@@ -112,41 +81,7 @@ const getPatientById = async (req, res, next) => {
 const updatePatientById = async (req, res, next) => {
   const { id: patientId } = req.params
 
-  const {
-    NRM,
-    nama,
-    NIK,
-    jenisKelamin,
-    umur,
-    tempatLahir,
-    tanggalLahir,
-    telephone,
-    JaminanKesehatan,
-    noBPJS,
-    alergi,
-    alamat,
-    namaPenanggungJawab,
-    telephonePenanggungJawab,
-    hubunganPenanggungJawab,
-  } = req.body
-
-  const patient = await Patient.update({
-    NRM: NRM,
-    nama: nama,
-    NIK: NIK,
-    jenisKelamin: jenisKelamin,
-    umur: umur,
-    tempatLahir: tempatLahir,
-    tanggalLahir: new Date(tanggalLahir),
-    telephone: telephone,
-    JaminanKesehatan: JaminanKesehatan,
-    noBPJS: noBPJS,
-    alergi: alergi,
-    alamat: alamat,
-    namaPenanggungJawab: namaPenanggungJawab,
-    telephonePenanggungJawab: telephonePenanggungJawab,
-    hubunganPenanggungJawab: hubunganPenanggungJawab,
-  }, {
+  const patient = await Patient.update(req.body, {
     where: {
       patientId: patientId,
     },

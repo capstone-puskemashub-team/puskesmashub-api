@@ -12,20 +12,29 @@ router.use((req, res, next) => {
   next();
 });
 
-router.route("/").get(authenticateUser, userController.getAllUsers);
+router.route("/").get(userController.getAllUsers);
 
 // router.route("/staff").get(authenticateUser, userController.getAllStaff);
 
 // router.route("/doctor").get(authenticateUser, userController.getAllDoctor);
 
-router.route("/current_user").get(authenticateUser, userController.getCurrentUser);
+// router.route("/current_user").get(userController.getCurrentUser);
 
-router.route("/:id").get(authenticateUser, userController.getSingleUser);
+// router.route("/:id").get(authenticateUser, userController.getSingleUser);
 
-router.route("/update_user").put(authenticateUser, userController.updateUser);
+// router.route("/update_user").put(authenticateUser, userController.updateUser);
 
-router.route("/update_password").put(authenticateUser, userController.updateUserPassword);
+// router.route("/update_password").put(userController.updateUserPassword);
 
-router.route("/delete").delete(authenticateUser, userController.deleteUser);
+// router.route("/delete").delete(userController.deleteUser);
+
+// this route is for testing not using auth
+router.route("/:id").get(userController.getUserById);
+
+router.route("/:id").put(userController.updateUserById);
+
+router.route("/:id").put(userController.updateUserPasswordById);
+
+router.route("/:id").post(userController.deleteUserById);
 
 module.exports = router

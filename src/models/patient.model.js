@@ -1,6 +1,6 @@
 const PatientModel = (sequelize, Sequelize) => {
-  const Patient = sequelize.define('patients', {
-    patiendId: {
+  const Patient = sequelize.define("patients", {
+    patientId: {
       type: Sequelize.STRING,
       primaryKey: true,
       unique: true,
@@ -19,7 +19,7 @@ const PatientModel = (sequelize, Sequelize) => {
       unique: true,
     },
     jenisKelamin: {
-      type: Sequelize.ENUM('L', 'P'),
+      type: Sequelize.ENUM("L", "P"),
     },
     umur: {
       type: Sequelize.INTEGER,
@@ -34,7 +34,7 @@ const PatientModel = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     JaminanKesehatan: {
-      type: Sequelize.ENUM('BPJS', 'Umum', 'Lainnya'),
+      type: Sequelize.ENUM("BPJS", "Umum", "Lainnya"),
     },
     noBPJS: {
       type: Sequelize.STRING,
@@ -53,8 +53,36 @@ const PatientModel = (sequelize, Sequelize) => {
     },
     hubunganPenanggungJawab: {
       type: Sequelize.STRING,
-    }
-  })
+    },
+    tanggalPemeriksaan: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+    keluhan: {
+      type: Sequelize.JSON,
+    },
+    suhuTubuh: {
+      type: Sequelize.FLOAT,
+    },
+    beratBadan: {
+      type: Sequelize.FLOAT,
+    },
+    beratLahir: {
+      type: Sequelize.FLOAT,
+    },
+    tinggiBadan: {
+      type: Sequelize.FLOAT,
+    },
+    panjangLaahir: {
+      type: Sequelize.FLOAT,
+    },
+    tekananDarah: {
+      type: Sequelize.STRING,
+    },
+    nadi: {
+      type: Sequelize.INTEGER,
+    },
+  });
 
   return Patient
 }

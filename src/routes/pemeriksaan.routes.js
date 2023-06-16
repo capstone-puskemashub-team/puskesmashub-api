@@ -20,3 +20,5 @@ router.route('/:id')
   .get(pemeriksaanController.getPemeriksaanById)
   .put(pemeriksaanController.updatePemeriksaanById)
   .delete(pemeriksaanController.deletePemeriksaanById)
+
+module.exports = router
