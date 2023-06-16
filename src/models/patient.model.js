@@ -7,7 +7,7 @@ const PatientModel = (sequelize, Sequelize) => {
       allowNull: false,
     },
     NRM: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     nama: {
@@ -73,7 +73,7 @@ const PatientModel = (sequelize, Sequelize) => {
     tinggiBadan: {
       type: Sequelize.FLOAT,
     },
-    panjangLaahir: {
+    panjangLahir: {
       type: Sequelize.FLOAT,
     },
     tekananDarah: {
