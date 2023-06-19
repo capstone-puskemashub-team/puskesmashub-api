@@ -32,7 +32,17 @@ $ npm run start
 /api/v0/patients
 ```
 
-[doctors](./docs/doctors.md)
+[Doctors](./docs/doctors.md)
 ```
 /api/v0/doctors
+```
+
+[Medicines](./docs/medicines.md)
+```
+/api/v0/medicines
+```
+
+[Diseases](./docs/diseases.md)
+```
+/api/v0/diseases
 ```
