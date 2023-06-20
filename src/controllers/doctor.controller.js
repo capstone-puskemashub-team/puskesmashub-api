@@ -48,10 +48,13 @@ const getAllDoctors = async (req, res, next) => {
     return next(error)
   }
 
+  const total_doctors = doctors.length
+
   const response = {
     status: 'success',
     message: 'Get all doctor success',
     data: {
+      total_doctors: total_doctors,
       doctors: doctors
     }
   }

@@ -4,13 +4,12 @@ const { v4: uuidv4 } = require("uuid")
 const Medicine = db.medicine
 
 const createMedicine = async (req, res, next) => {
-  const { nomor, nama, stok, harga, deskripsi } = req.body
+  const { nama, stok, harga, deskripsi } = req.body
 
   const medicineId = uuidv4()
 
   const medicine = await Medicine.create({
     medicineId: medicineId,
-    nomor: nomor,
     nama: nama,
     stok: stok,
     harga: harga,
@@ -36,7 +35,9 @@ const createMedicine = async (req, res, next) => {
 }
 
 const getAllMedicines = async (req, res, next) => {
-  const medicines = await Medicine.findAll()
+  const medicines = await Medicine.findAll({
+    order: [["nomor", "ASC"]],
+  })
 
   if (!medicines) {
     const error = new Error("Get all medicine failed")
@@ -44,10 +45,13 @@ const getAllMedicines = async (req, res, next) => {
     return next(error)
   }
 
+  const total_medicines = medicines.length
+
   const response = {
     status: "success",
     message: "Get all medicine success",
     data: {
+      total_medicines: total_medicines,
       medicines: medicines,
     },
   }
@@ -75,6 +79,7 @@ const getMedicineById = async (req, res, next) => {
     status: "success",
     message: "Get medicine by id success",
     data: {
+      medicineId: medicineId,
       medicine: medicine,
     },
   }

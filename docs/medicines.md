@@ -11,11 +11,10 @@ POST /api/v0/medicines
 **Request Body**
 ```JSON
 {
-    "nomor": 1,
     "nama": "Paracetamol",
+    "stok": "100",
     "harga": 10000,
-    "stok": 100,
-    "deskripsi": "Obat sakit kepala"
+    "deskripsi": "Obat panas dan pusing"
 }
 ```
 
@@ -55,16 +54,27 @@ GET /api/v0/medicines
     "status": "success",
     "message": "Get all medicine success",
     "data": {
+        "total_medicines": 2,
         "medicines": [
             {
-                "medicineId": "1b4e49d9-635b-4562-b0da-099bd851c27d",
+                "medicineId": "4bc217aa-238c-4007-8fdd-56e48387aaff",
                 "nomor": 1,
                 "nama": "Paracetamol",
                 "stok": 100,
                 "harga": 10000,
-                "deskripsi": "Obat sakit kepala",
-                "createdAt": "2023-06-19T12:02:58.000Z",
-                "updatedAt": "2023-06-19T12:02:58.000Z"
+                "deskripsi": "Obat panas dan pusing",
+                "createdAt": "2023-06-20T12:26:51.000Z",
+                "updatedAt": "2023-06-20T12:26:51.000Z"
+            },
+            {
+                "medicineId": "21e6a29b-536b-485c-9884-bbf88b93ce27",
+                "nomor": 2,
+                "nama": "Komik",
+                "stok": 100,
+                "harga": 2000,
+                "deskripsi": "Obat batuk",
+                "createdAt": "2023-06-20T12:27:52.000Z",
+                "updatedAt": "2023-06-20T12:27:52.000Z"
             }
         ]
     }
@@ -125,8 +135,8 @@ PUT /api/v0/medicines/1b4e49d9-635b-4562-b0da-099bd851c27d
 ```JSON
 {
     "nama": "Paracetamol",
-    "harga": 10000,
     "stok": 70,
+    "harga": 10000,
     "deskripsi": "Obat sakit kepala"
 }
 ```

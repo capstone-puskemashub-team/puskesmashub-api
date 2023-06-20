@@ -7,13 +7,12 @@ const Disease = db.disease
 const Medicine = db.medicine
 
 const createDisease = async (req, res, next) => {
-  const { nomor, nama, treatments, keluhan } = req.body
+  const { nama, treatments, keluhan } = req.body
 
   const diseaseId = uuidv4();
 
   const disease = await Disease.create({
     diseaseId: diseaseId,
-    nomor: nomor,
     nama: nama,
     treatments: treatments,
     keluhan: keluhan,
@@ -37,7 +36,9 @@ const createDisease = async (req, res, next) => {
 }
 
 const getAllDisease = async (req, res, next) => {
-  const disease = await Disease.findAll()
+  const disease = await Disease.findAll({
+    order: [["nomor", "ASC"]],
+  })
 
   if (!disease) {
     const error = new Error('Get all disease failed')
@@ -45,13 +46,16 @@ const getAllDisease = async (req, res, next) => {
     return next(error)
   }
 
+  const total_diseases = disease.length
+
   const response = {
     status: "success",
     message: "Get all disease success",
     data: {
+      total_diseases: total_diseases,
       disease: disease,
     },
-  }
+  };
 
   console.log(JSON.stringify(response))
   res.status(200).json(response)

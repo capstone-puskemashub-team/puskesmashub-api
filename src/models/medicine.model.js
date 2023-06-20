@@ -9,6 +9,8 @@ const MedicineModel = (sequelize, Sequelize) => {
     nomor: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      autoIncrement: true,
+      unique: true,
     },
     nama: {
       type: Sequelize.STRING,

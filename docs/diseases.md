@@ -12,7 +12,6 @@ POST /api/v0/diseases
 
 ```JSON
 {
-    "nomor": 1,
     "nama": "demam",
     "medicines": [
         "panadol",
@@ -62,9 +61,10 @@ GET /api/v0/diseases
     "status": "success",
     "message": "Get all disease success",
     "data": {
+        "total_diseases": 3,
         "disease": [
             {
-                "diseaseId": "a5d0bc74-e886-4096-9625-bf93d1fc1c54",
+                "diseaseId": "f8b1a1de-d601-4cc0-af09-d5dd65f66bbf",
                 "nomor": 1,
                 "nama": "demam",
                 "treatments": null,
@@ -72,8 +72,20 @@ GET /api/v0/diseases
                     "sakit kepala",
                     "panas"
                 ],
-                "createdAt": "2023-06-19T12:13:00.000Z",
-                "updatedAt": "2023-06-19T12:13:00.000Z"
+                "createdAt": "2023-06-20T12:32:40.000Z",
+                "updatedAt": "2023-06-20T12:32:40.000Z"
+            },
+            {
+                "diseaseId": "88b6a18d-5fc8-4ffe-abd3-a29893908ace",
+                "nomor": 2,
+                "nama": "flu",
+                "treatments": null,
+                "keluhan": [
+                    "batuk-batuk",
+                    "panas"
+                ],
+                "createdAt": "2023-06-20T12:33:33.000Z",
+                "updatedAt": "2023-06-20T12:33:33.000Z"
             }
         ]
     }
